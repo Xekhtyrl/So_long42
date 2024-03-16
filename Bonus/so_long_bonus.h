@@ -6,21 +6,24 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:39:24 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/06 17:13:09 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/15 21:07:44 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_BONUS_H
 # define SO_LONG_BONUS_H
 
-# include "../libft/headers/libft.h"
-# include "../libft/headers/get_next_line_bonus.h"
-# include "../libft/headers/ft_printf.h"
+# include "../lib/libft/headers/libft.h"
+# include "../lib/libft/headers/get_next_line_bonus.h"
+# include "../lib/libft/headers/ft_printf.h"
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 
 # define WIDTH 2400
-
 # define LENGTH 1400
+# define ERR_IMG "Error\nImage not loaded!"
+# define ERR_XPM "Error\nXPM not loaded!"
+# define ERR_NOCOLL "Error\nNot Enough Collectibles\n"
+# define ERR_IMP_COLL "Error\nCollectibles not collectables\n"
 
 typedef struct s_maplst
 {
@@ -97,10 +100,13 @@ void			refresh_player(t_pacmon	*player);
 //mechanic
 int				next_step_is_wall(t_map_info data, mlx_instance_t instance,
 					int dir);
+int				next_step_is_mob(t_map_info data, t_pacmon *mob, int dir);
 void			collect_collectible(t_map_info *data, mlx_instance_t instance);
-void			end_game(t_map_info *data, mlx_instance_t instance);
+void			end_game(t_map_info *data, mlx_instance_t instance, int win);
+int				mob_hit(mlx_instance_t player, t_pacmon *mobs, int p_size,
+					int mob_count);
 //hook
-void			hook_movements(struct mlx_key_data keydata, void *param);
+void			hook_movements(void *param);
 void			hook_menu(struct mlx_key_data keydata, void *param);
 void			close_menu(void *param);
 //movements
@@ -123,5 +129,20 @@ int				map_maker(t_maplst *map, t_map_info *data);
 //init_player
 void			init_player(t_map_info *data, t_point point);
 mlx_image_t		*load_player_image(mlx_t *mlx, char *sprite_path, char *part);
+void			print_move(t_map_info *data, t_pacmon *pacmon);
+//mobs
+int				init_mobs(t_map_info *data, t_point point);
+void			sableye_moveset(t_map_info *data, t_pacmon *mob, int key);
+int				mob_hook(t_map_info	*data, int key);
+void			sableye_moveset(t_map_info *data, t_pacmon *mob, int key);
+void			duskull_moveset(t_map_info *data, t_pacmon *mob, int key);
+void			gastly_moveset(t_map_info *data, t_pacmon *mob, int key);
+void			haunter_moveset(t_map_info *data, t_pacmon *mob, int key);
+void			yamask_moveset(t_map_info *data, t_pacmon *mob, int key);
+int				update_rand(int r, int count);
+//free_functions
+void			free_game(t_map_info *data, t_point *last, int flag);
+void			free_map(t_maplst **map);
+void			free_coll_lst(t_collectibles **lst);
 
 #endif

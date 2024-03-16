@@ -6,11 +6,11 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:49:51 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/04 23:56:19 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/07 18:09:04 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 int	next_step_is_wall(t_map_info data, mlx_instance_t instance, int dir)
 {

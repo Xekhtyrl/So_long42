@@ -6,13 +6,13 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 22:29:10 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/04 22:43:49 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:06:17 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static char	*wall_file_str(int clue) // !!! resort qqch d'allouer
+static char	*wall_file_str(int clue)
 {
 	char	*final;
 	char	*p1;
@@ -26,7 +26,7 @@ static char	*wall_file_str(int clue) // !!! resort qqch d'allouer
 	return (final);
 }
 
-// xpm = mlx_load_xpm42("./Sprites/Players/grumpy.xpm42");
+	// xpm = mlx_load_xpm42("./Sprites/Mobs/sableye/right.xpm42");
 static int	choose_wall(int clue, t_point *point, t_map_info *data)
 {
 	xpm_t		*xpm;
@@ -34,8 +34,9 @@ static int	choose_wall(int clue, t_point *point, t_map_info *data)
 
 	file_wall = (wall_file_str(clue));
 	xpm = mlx_load_xpm42((const char *)file_wall);
+	free(file_wall);
 	if (!xpm)
-		return (perror(file_wall), 0);
+		return (perror(file_wall), free(file_wall), 0);
 	xpm_to_image(data, xpm, *point, 10);
 	point->rx += data->p_size;
 	return (1);

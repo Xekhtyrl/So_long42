@@ -6,7 +6,7 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:53:24 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/04 23:41:28 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:59:53 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static mlx_image_t	*xpm_to_img(xpm_t *xpm, mlx_t *mlx, int i)
 	mlx_image_t	*img;
 
 	if (!xpm)
-		return (perror("cheeeh"), exit(0), NULL);
+		return (perror("Error\nXpm not loaded!"), exit(0), NULL);
 	img = mlx_texture_to_image(mlx, &(xpm->texture));
 	if (i >= 0)
 	{

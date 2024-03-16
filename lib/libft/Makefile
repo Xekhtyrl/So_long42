@@ -1,5 +1,11 @@
 NAME = libft.a
 
+C_GREEN = \033[0;32m
+C_RED = \033[0;31m
+C_BLUE = \033[0;34m
+C_PURPLE = \033[1;35m
+C_END=\033[0m
+
 #__________ PATHWAY __________#
 
 ASCII_DIR =	./Sources/ft_is_ascii
@@ -52,19 +58,19 @@ all: $(NAME)
 
 $(NAME): $(MY_OBJECTS) $(HEADERS)
 	@ar rc $(NAME) $(MY_OBJECTS)
-	@echo "all files have been compiled"
-	@echo "libft.a created"
+	@echo "all files have been compiled with $(C_PURPLE) $(CFLAGS) $(C_END)"
+	@echo "$(C_BLUE)libft.a created$(C_END)"
 
 %.o:	%.c
 	@gcc ${CFLAGS} -I $(HEADERS) -c $< -o $@
 
 clean:
 	@rm -rf $(MY_OBJECTS)
-	@echo "browser hystory cleared, you are safe now"
+	@echo "$(C_RED)browser hystory cleared, you are safe now$(C_END)"
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "there is nothing to see here"
+	@echo "$(C_RED)there is nothing to see here$(C_END)"
 
 re: fclean all
 

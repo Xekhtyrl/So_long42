@@ -6,7 +6,7 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:49:51 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/06 15:09:58 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:16:36 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,22 @@ void	collect_collectible(t_map_info *data, mlx_instance_t instance)
 		data->exit_img->instances[0].enabled = true;
 }
 
-void	end_game(t_map_info *data, mlx_instance_t instance)
+void	end_game(t_map_info *data, mlx_instance_t instance, int win)
 {
-	if (instance.x == data->exit_img->instances[0].x && instance.y
+	if (!win)
+	{
+		ft_printf("YOU DIED!\n");
+		mlx_close_window(data->mlx);
+		return ;
+	}
+	else if (instance.x == data->exit_img->instances[0].x && instance.y
 		== data->exit_img->instances[0].y)
 	{
 		if (data->exit_img->instances[0].enabled == true)
 		{
 			mlx_close_window(data->mlx);
 			ft_printf("You Won! Time to face the Council 4!!!\n");
+			return ;
 		}
 	}
 }

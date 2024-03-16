@@ -6,7 +6,7 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 22:06:55 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/04 23:55:22 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:23:15 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void	xpm_to_image(t_map_info *data, xpm_t *xpm, t_point point, int z)
 
 	i = 0;
 	if (!xpm)
-		return (perror("cheeeh"), /*free func*/exit(0));
+		return (perror(ERR_XPM), free_game(data, &point, 0), exit(0));
 	img = mlx_texture_to_image(data->mlx, &(xpm->texture));
 	if (!img)
-		return (perror("image not loaded!"), /*free func*/ exit(0));
+		return (perror(ERR_IMG), free_game(data, &point, 0), exit(0));
 	if (mlx_image_to_window(data->mlx, img, point.rx, point.ry) == -1)
-		return (perror("image not loaded!"), /*free func*/ exit(0));
+		return (perror(ERR_IMG), free_game(data, &point, 0), exit(0));
 	if (!mlx_resize_image(img, data->p_size, data->p_size))
-		return (perror("image not loaded!"), /*free func*/ exit(0));
+		return (perror(ERR_IMG), free_game(data, &point, 0), exit(0));
 	mlx_delete_xpm42(xpm);
 	(*img).instances[0].z = z;
 	if (!data->all_img[point.y][point.x])
@@ -74,13 +74,13 @@ static int	init_img_tab(t_map_info	*data)
 	i = 0;
 	data->all_img = ft_calloc(sizeof(mlx_image_t **), (size_t)data->length);
 	if (!data->all_img)
-		return (/*free function*/ 0);
+		return (free_game(data, NULL, 0), 0);
 	while (i < data->length)
 	{
 		data->all_img[i] = ft_calloc(sizeof(mlx_image_t *),
 				(size_t)data->width);
 		if (!data->all_img[i++])
-			return (/*free function ++ */ 0);
+			return (free_game(data, &(t_point){0, i, 0, 0, 0}, 0), 1);
 	}
 	(*data).coll_img = ft_calloc(sizeof(mlx_image_t *),
 			(size_t)data->tot_collectibles);
@@ -103,7 +103,7 @@ static int	map_maker_x(t_maplst *map, t_point *point, t_map_info *data,
 			}
 			else if (map->line[point->x] == '1')
 			{
-				if (check_surroundings(map, point, data) < 0)
+				if (check_surroundings(map, point, data) <= 0)
 					return (0);
 			}
 			else
@@ -125,7 +125,7 @@ int	map_maker(t_maplst *map, t_map_info *data)
 	collect = collectibles_struct(map);
 	init_img_tab(data);
 	if (!map_maker_x(map, &point, data, &collect))
-		return (0);
+		return (exit(0), 0);
+	free_coll_lst(&collect);
 	return (1);
 }
-// free map ici ou tjs utile plus tard?

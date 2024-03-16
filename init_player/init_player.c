@@ -6,7 +6,7 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 23:36:25 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/04 23:38:25 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/12 22:40:31 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,24 @@ mlx_image_t	*load_player_image(mlx_t *mlx, char *sprite_path, char *part)
 	img = mlx_texture_to_image(mlx, &(xpm->texture));
 	mlx_delete_xpm42(xpm);
 	return (img);
+}
+
+void	print_move(t_map_info *data, t_pacmon *pacmon)
+{
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A) && !mlx_is_key_down(data->mlx,
+			MLX_KEY_D) && !next_step_is_wall(*data, pacmon->back->instances[0],
+			MLX_KEY_A))
+		ft_printf("%i moves!\n", data->possible++);
+	else if (mlx_is_key_down(data->mlx, MLX_KEY_W)
+		&& !mlx_is_key_down(data->mlx, MLX_KEY_S) && !next_step_is_wall(*data,
+			pacmon->back->instances[0], MLX_KEY_W))
+		ft_printf("%i moves!\n", data->possible++);
+	else if (mlx_is_key_down(data->mlx, MLX_KEY_S)
+		&& !mlx_is_key_down(data->mlx, MLX_KEY_W) && !next_step_is_wall(*data,
+			pacmon->back->instances[0], MLX_KEY_S))
+		ft_printf("%i moves!\n", data->possible++);
+	else if (mlx_is_key_down(data->mlx, MLX_KEY_D)
+		&& !mlx_is_key_down(data->mlx, MLX_KEY_A) && !next_step_is_wall(*data,
+			pacmon->back->instances[0], MLX_KEY_D))
+		ft_printf("%i moves!\n", data->possible++);
 }

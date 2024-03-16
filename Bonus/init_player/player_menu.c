@@ -6,7 +6,7 @@
 /*   By: lvodak <lvodak@student.s19.be>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 21:53:24 by lvodak            #+#    #+#             */
-/*   Updated: 2024/03/06 15:10:40 by lvodak           ###   ########.fr       */
+/*   Updated: 2024/03/14 20:52:03 by lvodak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static mlx_image_t	*xpm_to_img(xpm_t *xpm, mlx_t *mlx, int i)
 	mlx_image_t	*img;
 
 	if (!xpm)
-		return (perror("cheeeh"), exit(0), NULL);
+		return (perror("Error\nXpm not loaded"), exit(0), NULL);
 	img = mlx_texture_to_image(mlx, &(xpm->texture));
 	if (i >= 0)
 	{
@@ -89,7 +89,7 @@ int	player_construction(void)
 	mlx_key_hook(menu.mlx, &hook_menu, &menu);
 	mlx_loop(menu.mlx);
 	return_val = menu.cursor->instances[0].x;
-	mlx_close_hook(menu.mlx, &close_menu, &menu);
+	close_menu(&menu);
 	mlx_terminate(menu.mlx);
 	return (return_val);
 }
